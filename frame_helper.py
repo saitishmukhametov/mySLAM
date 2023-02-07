@@ -50,7 +50,8 @@ def generate_frames(vid_path):
 
 def extractFeatures(frame):
   orb = cv2.ORB_create()
-  kps = orb.detect(frame, None)
+  pts = cv2.goodFeaturesToTrack(np.mean(frame, axis=2).astype(np.uint8), 3000, qualityLevel=0.01, minDistance=7)
+  kps = [cv2.KeyPoint(x=f[0][0], y=f[0][1], size=20) for f in pts]
   kps, des = orb.compute(frame, kps)
 
   return np.array([(kp.pt[0], kp.pt[1]) for kp in kps]), np.array(des)
