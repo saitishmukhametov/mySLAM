@@ -18,7 +18,7 @@ K = np.array([
     [F, 0, w//2],
     [0, F, h//2],
     [0, 0, 1]])
-    
+
 K_inv = np.linalg.inv(K)
 
 W = np.mat([[0,-1,0],[1,0,0],[0,0,1]],dtype=float)
@@ -51,7 +51,7 @@ def generate_frames(vid_path):
 def extractFeatures(frame):
   orb = cv2.ORB_create()
   kps = orb.detect(frame, None)
-  kps, des = orb.detectandcompute(frame, kps)
+  kps, des = orb.compute(frame, kps)
 
   return np.array([(kp.pt[0], kp.pt[1]) for kp in kps]), np.array(des)
 
